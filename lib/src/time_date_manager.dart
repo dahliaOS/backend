@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:cli';
-
 import 'package:dahlia_backend/src/database_manager.dart';
 import 'package:intl/intl.dart';
 
