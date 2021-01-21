@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:cli';
 
 import 'package:dahlia_backend/src/database_manager.dart';
@@ -6,14 +7,14 @@ import 'package:intl/intl.dart';
 class DateTimeManager {
   static String? _time;
   static String? _date;
-  static void initialiseScheduler() {
+  static void initialiseScheduler() async {
     //TODO create an initalisation for the default format
     //setTimeFormat('12h+S');
     //setDateFormat("dd.MM.yyyy");
     while (true) {
       formatTime();
       formatDate();
-      waitFor(Future.delayed(Duration(seconds: 1)));
+      await Future.delayed(Duration(seconds: 1));
     }
   }
 
