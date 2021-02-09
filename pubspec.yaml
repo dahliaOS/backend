@@ -1,6 +1,6 @@
 name: dahlia_backend
 description: A starting point for Dart libraries or applications.
-version: 0.0.1
+version: 0.0.1+1
 homepage: https://dahliaos.io
 
 environment:
@@ -11,15 +11,16 @@ dependencies:
     sdk: flutter
   provider: ^5.0.0-nullsafe3
   path: ^1.7.0
-  hive: ^1.5.0-pre
+  hive: ^1.6.0-nullsafety.2
   xdg_directories:
   cron: ^0.2.4
   intl: ^0.17.0-nullsafety.2
+  crypto: any
 
 dev_dependencies:
   pedantic: ^1.9.0
   test: ^1.14.4
-  vm_service: ^5.5.0
+  vm_service: ^6.0.1-nullsafety
   flutter_test:
     sdk: flutter
   integration_test:

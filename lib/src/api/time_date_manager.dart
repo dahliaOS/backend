@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:dahlia_backend/src/database_manager.dart';
+import 'package:dahlia_backend/dahlia_backend.dart';
 import 'package:intl/intl.dart';
 
 class DateTimeManager {
