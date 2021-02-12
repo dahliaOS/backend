@@ -14,6 +14,7 @@ class BoxContainer extends StatelessWidget {
   final bool useSystemOpacity;
   final double? customBlur;
   final SystemMouseCursor cursor;
+  final BoxDecoration? decoration;
 
   BoxContainer({
     this.child,
@@ -27,6 +28,7 @@ class BoxContainer extends StatelessWidget {
     this.customBlur,
     this.useSystemOpacity = false,
     this.cursor = SystemMouseCursors.basic,
+    this.decoration,
     Key? key,
   }) : super(key: key);
   @override
@@ -38,7 +40,8 @@ class BoxContainer extends StatelessWidget {
         width: width,
         height: height,
         margin: margin,
-        decoration: BoxDecoration(borderRadius: customBorderRadius),
+        decoration: decoration?.copyWith(borderRadius: customBorderRadius) ??
+            BoxDecoration(borderRadius: customBorderRadius),
         child: Blur(
           useBlur: useBlur ?? true,
           customBlur: customBlur,
