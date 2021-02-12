@@ -35,9 +35,8 @@ class PreferenceProvider extends ChangeNotifier {
     loadData();
   }
 
-
   //initial values
-  double _blur = 10.0;
+  double _blur = 25.0;
   double _borderRadius = 1.0;
   double _themeOpacity = 0.5;
   bool _darkMode = false;
