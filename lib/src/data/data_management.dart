@@ -38,7 +38,7 @@ class PreferenceProvider extends ChangeNotifier {
   //initial values
   double _blur = 25.0;
   double _borderRadius = 1.0;
-  double _themeOpacity = 0.5;
+  double _themeOpacity = 0.7;
   bool _darkMode = false;
   List<String> _packages = List.empty();
   String _iconPack = "io.dahlia.icons.default";
