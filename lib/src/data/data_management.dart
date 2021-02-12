@@ -57,6 +57,7 @@ class PreferenceProvider extends ChangeNotifier {
   double _brightness = 1.0;
   bool _wifi = true;
   bool _bluetooth = false;
+  String _fontFamily = "Roboto";
 
   //getter
   double get blur => _blur;
@@ -80,6 +81,7 @@ class PreferenceProvider extends ChangeNotifier {
   double get brightness => _brightness;
   bool get wifi => _wifi;
   bool get bluetooth => _bluetooth;
+  String get fontFamily => _fontFamily;
 
   //setter
   set blur(double blur) {
@@ -208,6 +210,12 @@ class PreferenceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  set fontFamily(String font) {
+    _fontFamily = font;
+    DatabaseManager.set("fontFamily", font);
+    notifyListeners();
+  }
+
   //load from Database
   void loadData() {
     blur = DatabaseManager.get("blur") ?? blur;
@@ -234,5 +242,6 @@ class PreferenceProvider extends ChangeNotifier {
     brightness = DatabaseManager.get("brightness") ?? brightness;
     wifi = DatabaseManager.get("wifi") ?? wifi;
     bluetooth = DatabaseManager.get("bluetooth") ?? bluetooth;
+    fontFamily = DatabaseManager.get("fontFamily") ?? fontFamily;
   }
 }
