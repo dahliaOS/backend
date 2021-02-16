@@ -16,13 +16,14 @@ limitations under the License.
 import 'package:flutter/widgets.dart';
 
 class Application {
-  final String? name, version, description;
+  final String? name, version, description, packageName;
   final Widget? app;
   final ApplicationCategory? category;
   final bool isTest;
   final String? iconName;
   const Application(
       {@required this.app,
+      @required this.packageName,
       this.category,
       this.description,
       this.iconName,
@@ -31,6 +32,7 @@ class Application {
       this.version});
   const Application.testing(
       {@required this.app,
+      @required this.packageName,
       this.category = ApplicationCategory.TESTING,
       this.description = "TESING APP",
       this.iconName,
