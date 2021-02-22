@@ -24,4 +24,8 @@ class SystemCalls {
   void restart() {
     Process.run("restart", []);
   }
+
+  void sleep() {
+    Process.run("sleep N", []);
+  }
 }
