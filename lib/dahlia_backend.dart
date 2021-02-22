@@ -23,5 +23,6 @@ export 'src/data/data_management.dart';
 export 'src/api/time_date_manager.dart';
 export 'src/widgets/box_container.dart';
 export 'src/vars/application.dart';
+export 'src/api/system_calls.dart';
 
 // TODO: Export any libraries intended for clients of this package.
