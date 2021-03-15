@@ -17,6 +17,7 @@ import 'package:dahlia_backend/src/data/data_management.dart';
 import 'package:dahlia_backend/src/widgets/blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class BoxContainer extends StatelessWidget {
@@ -62,11 +63,11 @@ class BoxContainer extends StatelessWidget {
           customBlur: customBlur,
           customBorderRadius: customBorderRadius,
           child: Container(
-            child: child,
             padding: padding,
             color: useSystemOpacity
                 ? color?.withOpacity(_data.themeOpacity)
                 : color,
+            child: child,
           ),
         ),
       ),
