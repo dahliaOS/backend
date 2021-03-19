@@ -13,13 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import 'package:path_provider/path_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class DatabaseManager {
   static late Box _hivedb;
   static Future<void> initialseDatabase() async {
-    Hive.init('/tmp/dahlia');
+    final _dir = await getApplicationDocumentsDirectory();
+    Hive.init(_dir.toString());
     _hivedb = await Hive.openBox('settings');
   }
 
