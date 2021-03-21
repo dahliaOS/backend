@@ -22,7 +22,7 @@ class DatabaseManager {
   static late Box _hivedb;
   static Future<void> initialseDatabase() async {
     final _dir = await getApplicationDocumentsDirectory();
-    Hive.init(_dir.toString());
+    Hive.init(_dir.path);
     _hivedb = await Hive.openBox('settings');
   }
 
