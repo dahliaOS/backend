@@ -31,6 +31,7 @@ class BoxContainer extends StatelessWidget {
   final double? customBlur;
   final SystemMouseCursor cursor;
   final BoxDecoration? decoration;
+  final Clip? clipBehavior;
 
   BoxContainer({
     this.child,
@@ -45,6 +46,7 @@ class BoxContainer extends StatelessWidget {
     this.useSystemOpacity = false,
     this.cursor = SystemMouseCursors.basic,
     this.decoration,
+    this.clipBehavior,
     Key? key,
   }) : super(key: key);
   @override
@@ -53,6 +55,7 @@ class BoxContainer extends StatelessWidget {
     return MouseRegion(
       cursor: cursor,
       child: Container(
+        clipBehavior: clipBehavior ?? Clip.none,
         width: width,
         height: height,
         margin: margin,
