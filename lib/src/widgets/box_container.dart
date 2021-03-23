@@ -55,7 +55,7 @@ class BoxContainer extends StatelessWidget {
     return MouseRegion(
       cursor: cursor,
       child: Container(
-        clipBehavior: clipBehavior ?? Clip.none,
+        clipBehavior: clipBehavior ?? Clip.antiAlias,
         width: width,
         height: height,
         margin: margin,
