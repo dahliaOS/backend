@@ -21,6 +21,7 @@ class Application {
   final ApplicationCategory? category;
   final bool isTest;
   final String? iconName;
+  final Color? color;
   const Application(
       {@required this.app,
       @required this.packageName,
@@ -28,6 +29,7 @@ class Application {
       this.description,
       this.iconName,
       @required this.name,
+      this.color,
       this.isTest = false,
       this.version});
   const Application.testing(
@@ -38,6 +40,7 @@ class Application {
       this.iconName,
       @required this.name,
       this.isTest = true,
+      this.color,
       this.version = "TEST"});
 }
 
