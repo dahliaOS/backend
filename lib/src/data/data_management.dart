@@ -77,6 +77,7 @@ class PreferenceProvider extends ChangeNotifier {
   bool _bluetooth = false;
   String _fontFamily = "Roboto";
   bool _useCustomAccentColor = false;
+  bool _useColoredTitleBar = false;
 
   //getter
   double get blur => _blur;
@@ -102,6 +103,7 @@ class PreferenceProvider extends ChangeNotifier {
   bool get bluetooth => _bluetooth;
   String get fontFamily => _fontFamily;
   bool get useCustomAccentColor => _useCustomAccentColor;
+  bool get useColoredTitlebar => _useColoredTitleBar;
 
   //setter
   set blur(double blur) {
@@ -242,6 +244,12 @@ class PreferenceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  set useColoredTitlebar(bool val) {
+    _useColoredTitleBar = val;
+    DatabaseManager.set("useColoredTitlebar", val);
+    notifyListeners();
+  }
+
   //load from Database
   void loadData() {
     blur = DatabaseManager.get("blur") ?? blur;
@@ -271,5 +279,7 @@ class PreferenceProvider extends ChangeNotifier {
     fontFamily = DatabaseManager.get("fontFamily") ?? fontFamily;
     useCustomAccentColor =
         DatabaseManager.get("useCustomAccentColor") ?? useCustomAccentColor;
+    useColoredTitlebar =
+        DatabaseManager.get("useColoredTitlebar") ?? useColoredTitlebar;
   }
 }
