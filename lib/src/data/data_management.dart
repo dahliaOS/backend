@@ -251,17 +251,17 @@ class PreferenceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  set addToPinnedApps(String value) {
-    _pinnedApps.contains(value)
-        ? _pinnedApps.add(value)
-        : _pinnedApps.remove(value);
-    DatabaseManager.set("pinnedApps", value);
-    notifyListeners();
-  }
-
   set useColoredTitlebar(bool val) {
     _useColoredTitleBar = val;
     DatabaseManager.set("useColoredTitlebar", val);
+    notifyListeners();
+  }
+
+  void togglePinnedApp(String packageName) {
+    _pinnedApps.contains(packageName)
+        ? _pinnedApps.add(packageName)
+        : _pinnedApps.remove(packageName);
+    DatabaseManager.set("pinnedApps", _pinnedApps);
     notifyListeners();
   }
 
