@@ -78,6 +78,12 @@ class PreferenceProvider extends ChangeNotifier {
   String _fontFamily = "Roboto";
   bool _useCustomAccentColor = false;
   bool _useColoredTitleBar = false;
+  List<String> _pinnedApps = List.from([
+    "io.dahlia.calculator",
+    "io.dahlia.files",
+    "io.dahlia.settings",
+    "io.dahlia.terminal"
+  ], growable: true);
 
   //getter
   double get blur => _blur;
@@ -104,6 +110,7 @@ class PreferenceProvider extends ChangeNotifier {
   String get fontFamily => _fontFamily;
   bool get useCustomAccentColor => _useCustomAccentColor;
   bool get useColoredTitlebar => _useColoredTitleBar;
+  List<String> get pinnedApps => _pinnedApps;
 
   //setter
   set blur(double blur) {
@@ -244,6 +251,14 @@ class PreferenceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  set addToPinnedApps(String value) {
+    _pinnedApps.contains(value)
+        ? _pinnedApps.add(value)
+        : _pinnedApps.remove(value);
+    DatabaseManager.set("pinnedApps", value);
+    notifyListeners();
+  }
+
   set useColoredTitlebar(bool val) {
     _useColoredTitleBar = val;
     DatabaseManager.set("useColoredTitlebar", val);
@@ -281,5 +296,6 @@ class PreferenceProvider extends ChangeNotifier {
         DatabaseManager.get("useCustomAccentColor") ?? useCustomAccentColor;
     useColoredTitlebar =
         DatabaseManager.get("useColoredTitlebar") ?? useColoredTitlebar;
+    _pinnedApps = List.from(DatabaseManager.get("pinnedApps") ?? pinnedApps);
   }
 }
