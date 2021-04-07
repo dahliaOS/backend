@@ -15,15 +15,33 @@ limitations under the License.
 */
 import 'dart:async';
 import 'package:dahlia_backend/dahlia_backend.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateTimeManager {
+  /// Current time [ValueNotifier]
+  ///
+  /// Notifies about the current time according to the [DateFormat]
+  static ValueNotifier<String>? _timeNotifier;
+
+  /// Current date [ValueNotifier]
+  ///
+  /// Notifies about the current date according to the [DateFormat]
+  static ValueNotifier<String>? _dateNotifier;
+
   static String? _time;
   static String? _date;
+
   static void initialiseScheduler() async {
     //TODO create an initalisation for the default format
     //setTimeFormat('12h+S');
     //setDateFormat("dd.MM.yyyy");
+
+    _timeNotifier = ValueNotifier(_getTimeFormat().format(DateTime.now()));
+
+    _dateNotifier = ValueNotifier(
+        DateFormat(DatabaseManager.get('dateFormat')).format(DateTime.now()));
+
     while (true) {
       formatTime();
       formatDate();
@@ -31,44 +49,59 @@ class DateTimeManager {
     }
   }
 
-  //getTime
-  ///returns the Time with the selected format
-  ///eg. 11:30 am | 16:20
+  static ValueNotifier<String>? getTimeNotifier() => _timeNotifier;
+
+  static ValueNotifier<String>? getDateNotifier() => _dateNotifier;
+
+  /// Returns the Time with the selected format
+  ///
+  /// eg. 11:30 am | 16:20
+  /// Note: To get realtime time updates use [getTimeNotifier]
   static String? getTime() => _time;
 
-  //getDate
-  ///returns the Date with the selected format
-  ///eg. 24.12.2021 | 12/24/2021
+  /// Returns the Date with the selected format
+  ///
+  /// eg. 24.12.2021 | 12/24/2021
+  /// Note: To get realtime date updates use [getDateNotifier]
   static String? getDate() => _date;
 
-  //format the Data
+  /// Format the Date
   static void formatDate() {
     _date =
         DateFormat(DatabaseManager.get('dateFormat')).format(DateTime.now());
+    _dateNotifier!.value = _date!;
   }
 
-  //format the time
-  static void formatTime() {
+  /// Get the [DateFormat]
+  static DateFormat _getTimeFormat() {
+    DateFormat _format;
     switch (DatabaseManager.get('timeFormat')) {
       case '12h':
-        _time = DateFormat.jm().format(DateTime.now());
+        _format = DateFormat.jm();
         break;
       case '24h':
-        _time = DateFormat.Hm().format(DateTime.now());
+        _format = DateFormat.Hm();
         break;
       case '12h+s':
-        _time = DateFormat.jms().format(DateTime.now());
+        _format = DateFormat.jms();
         break;
       case '24h+s':
-        _time = DateFormat.Hms().format(DateTime.now());
+        _format = DateFormat.Hms();
         break;
       default:
-        _time = DateFormat.Hms().format(DateTime.now());
+        _format = DateFormat.Hms();
         break;
     }
+    return _format;
   }
 
-  //setTimeFormat
+  /// Format the time
+  static void formatTime() {
+    _time = _getTimeFormat().format(DateTime.now());
+    _timeNotifier!.value = _time!;
+  }
+
+  /// Sets the Time Format
   /// Choose the time format:
   /// am/pm:  "12h"
   /// 24hr:       "24h"
@@ -78,9 +111,9 @@ class DateTimeManager {
     DatabaseManager.set('timeFormat', format.toLowerCase());
   }
 
-  //setDateFormat
-  ///Choose a time format
-  ///More information: https://pub.dev/documentation/intl/latest/intl/DateFormat-class.html
+  /// Sets the Date Format
+  /// Choose a time format
+  /// More information: https://pub.dev/documentation/intl/latest/intl/DateFormat-class.html
   static void setDateFormat(String format) {
     DatabaseManager.set('dateFormat', format);
   }
