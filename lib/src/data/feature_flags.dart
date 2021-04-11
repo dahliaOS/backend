@@ -13,14 +13,29 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-library dahlia_backend;
+import 'package:dahlia_backend/dahlia_backend.dart';
+import 'package:flutter/material.dart';
 
-export 'src/api/data_provider.dart';
-export 'src/data/data_management.dart';
-export 'src/api/time_date_manager.dart';
-export 'src/widgets/box_container.dart';
-export 'src/vars/application.dart';
-export 'src/api/system_calls.dart';
-export 'src/data/feature_flags.dart';
+class FeatureFlags extends ChangeNotifier {
+  FeatureFlags() {
+    _loadData();
+  }
 
-// TODO: Export any libraries intended for clients of this package.
+  //FeatureFlag Keys
+  bool _useAcrylic = false;
+
+  //Getter
+  bool get useAcrylic => _useAcrylic;
+
+  //Setter
+  set useAcrylic(bool value) {
+    _useAcrylic = value;
+    notifyListeners();
+    DatabaseManager.set("feature_useAcrylic", value);
+  }
+
+  //Load Values
+  void _loadData() {
+    useAcrylic = DatabaseManager.get("feature_useAcrylic") ?? _useAcrylic;
+  }
+}
