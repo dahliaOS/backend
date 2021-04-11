@@ -19,6 +19,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+// Credits: @HrX03 (https://github.com/hrx03)
 class Acrylic extends StatelessWidget {
   final Color color;
   final Widget? child;
@@ -102,6 +103,7 @@ class _AcrylicPainter extends CustomPainter {
   }
 }
 
+// Credits: @HrX03 (https://github.com/hrx03)
 /// Microsoft utils converted from C# to dart
 class AcrylicHelper {
   static Color getEffectiveTintColor(Color color, double opacity) {
