@@ -77,9 +77,14 @@ class BoxContainer extends StatelessWidget {
                   child: child,
                 ),
               )
-            : Acrylic(
-                color: Colors.black,
-                child: Container(padding: padding, child: child)),
+            : Container(
+                padding: padding,
+                child: Acrylic(
+                    opacity: _data.themeOpacity,
+                    blurRadius: _data.blur,
+                    color: color ?? Theme.of(context).backgroundColor,
+                    child: Container(padding: padding, child: child)),
+              ),
       ),
     );
   }

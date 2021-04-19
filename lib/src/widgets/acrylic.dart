@@ -42,12 +42,12 @@ class Acrylic extends StatelessWidget {
           painter: _AcrylicPainter(
             tintColor: _tint,
             luminosityColor:
-                AcrylicHelper.getLuminosityColor(_tint, opacity ?? 0.5),
+                AcrylicHelper.getLuminosityColor(_tint, opacity ?? 0.9),
           ),
           child: Stack(
             children: [
               Opacity(
-                opacity: 0.02,
+                opacity: 0.03,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -62,7 +62,13 @@ class Acrylic extends StatelessWidget {
                   child: Container(),
                 ),
               ),
-              child ?? Container(),
+              Align(
+                  /* left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0, */
+                  alignment: Alignment.center,
+                  child: child ?? Container()),
             ],
           ),
         ),

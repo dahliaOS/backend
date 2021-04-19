@@ -8,7 +8,7 @@
             "name": "dahlia_backend",
             "request": "launch",
             "type": "dart",
-            "program": "example/dahlia_backend_example.dart",
+            "program": "../lib/main.dart",
         }
     ]
 }
