@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import 'package:dahlia_backend/src/data/data_management.dart';
-import 'package:dahlia_backend/src/widgets/blur/blur.dart';
+import 'package:dahlia_backend/src/data/feature_flags.dart';
+import 'package:dahlia_backend/src/widgets/acrylic.dart';
+import 'package:dahlia_backend/src/widgets/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -52,6 +54,7 @@ class BoxContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _data = context.read<PreferenceProvider>();
+    final _feature = context.watch<FeatureFlags>();
     return MouseRegion(
       cursor: cursor,
       child: Container(
@@ -61,18 +64,27 @@ class BoxContainer extends StatelessWidget {
         margin: margin,
         decoration: decoration?.copyWith(borderRadius: customBorderRadius) ??
             BoxDecoration(borderRadius: customBorderRadius),
-        child: Blur(
-          useBlur: useBlur ?? true,
-          customBlur: customBlur,
-          customBorderRadius: customBorderRadius,
-          child: Container(
-            padding: padding,
-            color: useSystemOpacity
-                ? color?.withOpacity(_data.themeOpacity)
-                : color,
-            child: child,
-          ),
-        ),
+        child: !_feature.useAcrylic
+            ? Blur(
+                useBlur: useBlur ?? true,
+                customBlur: customBlur,
+                customBorderRadius: customBorderRadius,
+                child: Container(
+                  padding: padding,
+                  color: useSystemOpacity
+                      ? color?.withOpacity(_data.themeOpacity)
+                      : color,
+                  child: child,
+                ),
+              )
+            : Container(
+                padding: padding,
+                child: Acrylic(
+                    opacity: _data.themeOpacity,
+                    blurRadius: _data.blur,
+                    color: color ?? Theme.of(context).backgroundColor,
+                    child: Container(padding: padding, child: child)),
+              ),
       ),
     );
   }

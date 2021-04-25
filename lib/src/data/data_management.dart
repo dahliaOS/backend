@@ -258,7 +258,7 @@ class PreferenceProvider extends ChangeNotifier {
   }
 
   void togglePinnedApp(String packageName) {
-    _pinnedApps.contains(packageName)
+    !_pinnedApps.contains(packageName)
         ? _pinnedApps.add(packageName)
         : _pinnedApps.remove(packageName);
     DatabaseManager.set("pinnedApps", _pinnedApps);
