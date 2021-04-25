@@ -16,7 +16,7 @@ limitations under the License.
 import 'package:dahlia_backend/src/data/data_management.dart';
 import 'package:dahlia_backend/src/data/feature_flags.dart';
 import 'package:dahlia_backend/src/widgets/acrylic.dart';
-import 'package:dahlia_backend/src/widgets/blur/blur.dart';
+import 'package:dahlia_backend/src/widgets/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';

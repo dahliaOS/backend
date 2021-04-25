@@ -17,7 +17,9 @@ limitations under the License.
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:dahlia_backend/dahlia_backend.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // Credits: @HrX03 (https://github.com/hrx03)
 class Acrylic extends StatelessWidget {
@@ -33,43 +35,51 @@ class Acrylic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _pref = Provider.of<PreferenceProvider>(context);
     final _tint = AcrylicHelper.getEffectiveTintColor(color, opacity ?? 0.9);
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(
-            sigmaX: blurRadius ?? 24, sigmaY: blurRadius ?? 24),
+            sigmaX: _pref.enableBlur ? blurRadius ?? 24 : 0,
+            sigmaY: _pref.enableBlur ? blurRadius ?? 24 : 0),
         child: CustomPaint(
           painter: _AcrylicPainter(
-            tintColor: _tint,
-            luminosityColor:
-                AcrylicHelper.getLuminosityColor(_tint, opacity ?? 0.9),
+            context: context,
+            tintColor: _pref.enableBlur ? _tint : Colors.transparent,
+            luminosityColor: AcrylicHelper.getLuminosityColor(
+                _pref.enableBlur ? _tint : Colors.transparent, opacity ?? 0.9),
           ),
-          child: Stack(
-            children: [
-              Opacity(
-                opacity: 0.03,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                          "global/assets/NoiseAsset_256X256_PNG.png"),
-                      alignment: Alignment.topLeft,
-                      repeat: ImageRepeat.repeat,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+                sigmaX: _pref.enableBlur ? blurRadius ?? 24 : 0,
+                sigmaY: _pref.enableBlur ? blurRadius ?? 24 : 0),
+            child: Stack(
+              children: [
+                Opacity(
+                  opacity: _pref.enableBlur ? 0.03 : 0,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                            "global/assets/NoiseAsset_256X256_PNG.png"),
+                        alignment: Alignment.topLeft,
+                        repeat: ImageRepeat.repeat,
+                      ),
+                      backgroundBlendMode: BlendMode.srcOver,
+                      color: Colors.transparent,
                     ),
-                    backgroundBlendMode: BlendMode.srcOver,
-                    color: Colors.transparent,
+                    child: Container(),
                   ),
-                  child: Container(),
                 ),
-              ),
-              Align(
-                  /* left: 0,
-                  right: 0,
-                  top: 0,
-                  bottom: 0, */
-                  alignment: Alignment.center,
-                  child: child ?? Container()),
-            ],
+                Align(
+                    /* left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0, */
+                    alignment: Alignment.center,
+                    child: child ?? Container()),
+              ],
+            ),
           ),
         ),
       ),
@@ -84,22 +94,25 @@ class _AcrylicPainter extends CustomPainter {
   static final Color green = Color(0xFF0000FF).withOpacity(0.12);
   final Color luminosityColor;
   final Color tintColor;
+  final BuildContext context;
 
-  _AcrylicPainter({
-    required this.luminosityColor,
-    required this.tintColor,
-  });
+  _AcrylicPainter(
+      {required this.luminosityColor,
+      required this.tintColor,
+      required this.context});
 
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawColor(luminosityColor, BlendMode.luminosity);
-    canvas.drawColor(red, BlendMode.saturation);
-    canvas.drawColor(blue, BlendMode.saturation);
-    canvas.drawColor(green, BlendMode.saturation);
-    canvas.drawColor(
-      tintColor,
-      tintColor.opacity == 1 ? BlendMode.srcIn : BlendMode.color,
-    );
+    if (context.read<PreferenceProvider>().enableBlur) {
+      canvas.drawColor(red, BlendMode.saturation);
+      canvas.drawColor(blue, BlendMode.saturation);
+      canvas.drawColor(green, BlendMode.saturation);
+      canvas.drawColor(
+        tintColor,
+        tintColor.opacity == 1 ? BlendMode.srcIn : BlendMode.color,
+      );
+    }
   }
 
   @override

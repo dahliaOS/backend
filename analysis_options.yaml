@@ -7,8 +7,13 @@ include: package:pedantic/analysis_options.yaml
 # Uncomment to specify additional rules.
 # linter:
 #   rules:
-#     - camel_case_types
+#     - prefer_single_quotes
 
 analyzer:
+  errors:
+    prefer_single_quotes: ignore
+    unnecessary_this: ignore
+    unused_local_variable: ignore
+    omit_local_variable_types: ignore
 #   exclude:
 #     - path/to/excluded/files/**
