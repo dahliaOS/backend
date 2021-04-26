@@ -17,12 +17,14 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class DatabaseManager {
   static late Box _hivedb;
   static Future<void> initialseDatabase() async {
-    final _dir = await getApplicationDocumentsDirectory();
-    Hive.init(_dir.path);
+    //final _dir = await getApplicationDocumentsDirectory();
+    await Hive.initFlutter();
+    //Hive.init(_dir.path);
     _hivedb = await Hive.openBox('settings');
   }
 

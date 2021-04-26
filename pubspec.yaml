@@ -17,6 +17,7 @@ dependencies:
   cron: ^0.3.0
   intl: ^0.17.0-nullsafety.2
   crypto: any
+  hive_flutter: any
 
 dev_dependencies:
   pedantic: ^1.9.0
