@@ -23,10 +23,10 @@ class FeatureFlags extends ChangeNotifier {
 
   //FeatureFlag Keys
   bool _useAcrylic = false;
-
+  bool _jsonOverride = false;
   //Getter
   bool get useAcrylic => _useAcrylic;
-
+  bool get jsonOverride => _jsonOverride;
   //Setter
   set useAcrylic(bool value) {
     _useAcrylic = value;
@@ -34,8 +34,15 @@ class FeatureFlags extends ChangeNotifier {
     DatabaseManager.set("feature_useAcrylic", value);
   }
 
+  set jsonOverride(bool value) {
+    _jsonOverride = value;
+    notifyListeners();
+    DatabaseManager.set("feature_jsonOverride", value);
+  }
+
   //Load Values
   void _loadData() {
     useAcrylic = DatabaseManager.get("feature_useAcrylic") ?? _useAcrylic;
+    jsonOverride = DatabaseManager.get("feature_jsonOverride") ?? _useAcrylic;
   }
 }
