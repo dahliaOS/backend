@@ -34,6 +34,7 @@ class BoxContainer extends StatelessWidget {
   final SystemMouseCursor cursor;
   final BoxDecoration? decoration;
   final Clip? clipBehavior;
+  final bool useShadows;
 
   BoxContainer({
     this.child,
@@ -49,6 +50,7 @@ class BoxContainer extends StatelessWidget {
     this.cursor = SystemMouseCursors.basic,
     this.decoration,
     this.clipBehavior,
+    this.useShadows = false,
     Key? key,
   }) : super(key: key);
   @override
@@ -63,7 +65,18 @@ class BoxContainer extends StatelessWidget {
         height: height,
         margin: margin,
         decoration: decoration?.copyWith(borderRadius: customBorderRadius) ??
-            BoxDecoration(borderRadius: customBorderRadius),
+            BoxDecoration(
+              borderRadius: customBorderRadius,
+              boxShadow: this.useShadows
+                  ? [
+                      BoxShadow(
+                        blurRadius: 20,
+                        spreadRadius: 4,
+                        color: Theme.of(context).shadowColor.withOpacity(0.1),
+                      ),
+                    ]
+                  : [],
+            ),
         child: !_feature.useAcrylic
             ? Blur(
                 useBlur: useBlur ?? true,
@@ -73,14 +86,15 @@ class BoxContainer extends StatelessWidget {
                   padding: padding,
                   color: useSystemOpacity
                       ? color?.withOpacity(_data.themeOpacity)
-                      : color,
+                      : color?.withOpacity(color!.opacity),
                   child: child,
                 ),
               )
             : Container(
                 padding: padding,
                 child: Acrylic(
-                    opacity: _data.themeOpacity,
+                    opacity:
+                        useSystemOpacity ? _data.themeOpacity : color!.opacity,
                     blurRadius: _data.blur,
                     color: color ?? Theme.of(context).backgroundColor,
                     child: Container(padding: padding, child: child)),

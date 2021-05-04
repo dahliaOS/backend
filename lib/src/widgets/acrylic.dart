@@ -56,7 +56,7 @@ class Acrylic extends StatelessWidget {
             child: Stack(
               children: [
                 Opacity(
-                  opacity: _pref.enableBlur ? 0.03 : 0,
+                  opacity: _pref.enableBlur ? 0.02 : 0,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       image: DecorationImage(

@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import 'package:path_provider/path_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -86,6 +85,8 @@ class PreferenceProvider extends ChangeNotifier {
     "io.dahlia.settings",
     "io.dahlia.terminal"
   ], growable: true);
+  List<String> _recentWallpapers = List.from([], growable: true);
+  double _taskbarPosition = 2;
 
   //getter
   double get blur => _blur;
@@ -113,6 +114,8 @@ class PreferenceProvider extends ChangeNotifier {
   bool get useCustomAccentColor => _useCustomAccentColor;
   bool get useColoredTitlebar => _useColoredTitleBar;
   List<String> get pinnedApps => _pinnedApps;
+  List<String> get recentWallpapers => _recentWallpapers;
+  double get taskbarPosition => _taskbarPosition;
 
   //setter
   set blur(double blur) {
@@ -267,6 +270,20 @@ class PreferenceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addRecentWallpaper(String ref) {
+    if (!_recentWallpapers.contains(ref)) {
+      _recentWallpapers.add(ref);
+      DatabaseManager.set("recentWallpapers", _recentWallpapers);
+      notifyListeners();
+    }
+  }
+
+  set taskbarPosition(double value) {
+    _taskbarPosition = value;
+    DatabaseManager.set("taskbarPosition", value);
+    notifyListeners();
+  }
+
   //load from Database
   void loadData() {
     blur = DatabaseManager.get("blur") ?? blur;
@@ -299,5 +316,9 @@ class PreferenceProvider extends ChangeNotifier {
     useColoredTitlebar =
         DatabaseManager.get("useColoredTitlebar") ?? useColoredTitlebar;
     _pinnedApps = List.from(DatabaseManager.get("pinnedApps") ?? pinnedApps);
+    _recentWallpapers =
+        List.from(DatabaseManager.get("recentWallpapers") ?? recentWallpapers);
+    _taskbarPosition =
+        DatabaseManager.get("taskbarPosition") ?? taskbarPosition;
   }
 }
