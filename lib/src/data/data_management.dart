@@ -87,6 +87,8 @@ class PreferenceProvider extends ChangeNotifier {
   ], growable: true);
   List<String> _recentWallpapers = List.from([], growable: true);
   double _taskbarPosition = 2;
+  int _launcherIcon = Icons.apps.codePoint;
+  List<String> _recentSearchResults = List.from([], growable: true);
 
   //getter
   double get blur => _blur;
@@ -116,172 +118,186 @@ class PreferenceProvider extends ChangeNotifier {
   List<String> get pinnedApps => _pinnedApps;
   List<String> get recentWallpapers => _recentWallpapers;
   double get taskbarPosition => _taskbarPosition;
+  int get launcherIcon => _launcherIcon;
+  List<String> get recentSearchResults => _recentSearchResults;
 
   //setter
   set blur(double blur) {
     _blur = blur;
-    DatabaseManager.set("blur", blur);
     notifyListeners();
+    DatabaseManager.set("blur", blur);
   }
 
   set borderRadius(double borderRadius) {
     _borderRadius = borderRadius;
-    DatabaseManager.set("borderRadius", borderRadius);
     notifyListeners();
+    DatabaseManager.set("borderRadius", borderRadius);
   }
 
   set themeOpacity(double opacity) {
     _themeOpacity = opacity;
-    DatabaseManager.set("themeOpacity", opacity);
     notifyListeners();
+    DatabaseManager.set("themeOpacity", opacity);
   }
 
   set darkMode(bool darkMode) {
     _darkMode = darkMode;
-    DatabaseManager.set("darkMode", darkMode);
     notifyListeners();
+    DatabaseManager.set("darkMode", darkMode);
   }
 
   set packages(List<String> packages) {
     _packages = packages;
-    DatabaseManager.set("packages", packages);
     notifyListeners();
+    DatabaseManager.set("packages", packages);
   }
 
   set iconPack(String iconPack) {
     _iconPack = iconPack;
-    DatabaseManager.set("iconPack", iconPack);
     notifyListeners();
+    DatabaseManager.set("iconPack", iconPack);
   }
 
   set wallpaper(String path) {
     _wallpaper = path;
-    DatabaseManager.set("wallpaper", path);
     notifyListeners();
+    DatabaseManager.set("wallpaper", path);
   }
 
   set centerTaskbar(bool value) {
     _centerTaskbar = value;
-    DatabaseManager.set("centerTaskbar", value);
     notifyListeners();
+    DatabaseManager.set("centerTaskbar", value);
   }
 
   set enableBlur(bool value) {
     _enableBlur = value;
-    DatabaseManager.set("enableBlur", value);
     notifyListeners();
+    DatabaseManager.set("enableBlur", value);
   }
 
   set randomWallpaper(bool value) {
     _randomWallpaper = value;
-    DatabaseManager.set("randomWallpaper", value);
     notifyListeners();
+    DatabaseManager.set("randomWallpaper", value);
   }
 
   set accentColor(int value) {
     _accentColor = value;
-    DatabaseManager.set("accentColor", value);
     notifyListeners();
+    DatabaseManager.set("accentColor", value);
   }
 
   set enableDevOptions(bool value) {
     _enableDevOptions = value;
-    DatabaseManager.set("enableDeveloperOptions", value);
     notifyListeners();
+    DatabaseManager.set("enableDeveloperOptions", value);
   }
 
   set enableAutoTime(bool value) {
     _enableAutoTime = value;
-    DatabaseManager.set("enableAutoTime", value);
     notifyListeners();
+    DatabaseManager.set("enableAutoTime", value);
   }
 
   set showSeconds(bool value) {
     _showSeconds = value;
-    DatabaseManager.set("showSeconds", value);
     notifyListeners();
+    DatabaseManager.set("showSeconds", value);
   }
 
   set enable24h(bool value) {
     _enable24h = value;
-    DatabaseManager.set("enable24h", value);
     notifyListeners();
+    DatabaseManager.set("enable24h", value);
   }
 
   set keyboardLayoutName(String value) {
     _keyboardLayoutName = value;
-    DatabaseManager.set("keyboardLayoutName", value);
     notifyListeners();
+    DatabaseManager.set("keyboardLayoutName", value);
   }
 
   set volumeLevel(double value) {
     _volumeLevel = value;
-    DatabaseManager.set("volumeLevel", value);
     notifyListeners();
+    DatabaseManager.set("volumeLevel", value);
   }
 
   set enableBluelightFilter(bool value) {
     _enableBluelightFilter = value;
-    DatabaseManager.set("enableBluelightFilter", value);
     notifyListeners();
+    DatabaseManager.set("enableBluelightFilter", value);
   }
 
   set brightness(double value) {
     _brightness = value;
-    DatabaseManager.set("brightness", value);
     notifyListeners();
+    DatabaseManager.set("brightness", value);
   }
 
   set wifi(bool value) {
     _wifi = value;
-    DatabaseManager.set("wifi", value);
     notifyListeners();
+    DatabaseManager.set("wifi", value);
   }
 
   set bluetooth(bool value) {
     _bluetooth = value;
-    DatabaseManager.set("bluetooth", value);
     notifyListeners();
+    DatabaseManager.set("bluetooth", value);
   }
 
   set fontFamily(String font) {
     _fontFamily = font;
-    DatabaseManager.set("fontFamily", font);
     notifyListeners();
+    DatabaseManager.set("fontFamily", font);
   }
 
   set useCustomAccentColor(bool val) {
     _useCustomAccentColor = val;
-    DatabaseManager.set("useCustomAccentColor", val);
     notifyListeners();
+    DatabaseManager.set("useCustomAccentColor", val);
   }
 
   set useColoredTitlebar(bool val) {
     _useColoredTitleBar = val;
-    DatabaseManager.set("useColoredTitlebar", val);
     notifyListeners();
+    DatabaseManager.set("useColoredTitlebar", val);
   }
 
   void togglePinnedApp(String packageName) {
     !_pinnedApps.contains(packageName)
         ? _pinnedApps.add(packageName)
         : _pinnedApps.remove(packageName);
-    DatabaseManager.set("pinnedApps", _pinnedApps);
     notifyListeners();
+    DatabaseManager.set("pinnedApps", _pinnedApps);
   }
 
   void addRecentWallpaper(String ref) {
     if (!_recentWallpapers.contains(ref)) {
       _recentWallpapers.add(ref);
-      DatabaseManager.set("recentWallpapers", _recentWallpapers);
       notifyListeners();
+      DatabaseManager.set("recentWallpapers", _recentWallpapers);
     }
   }
 
   set taskbarPosition(double value) {
     _taskbarPosition = value;
-    DatabaseManager.set("taskbarPosition", value);
     notifyListeners();
+    DatabaseManager.set("taskbarPosition", value);
+  }
+
+  set launcherIcon(int codePoint) {
+    _launcherIcon = codePoint;
+    notifyListeners();
+    DatabaseManager.set("launcherIcon", codePoint);
+  }
+
+  void addRecentSearchResult(String value) {
+    _recentSearchResults.add(value);
+    notifyListeners();
+    DatabaseManager.set("recentSearchResults", _recentSearchResults);
   }
 
   //load from Database
@@ -320,5 +336,8 @@ class PreferenceProvider extends ChangeNotifier {
         List.from(DatabaseManager.get("recentWallpapers") ?? recentWallpapers);
     _taskbarPosition =
         DatabaseManager.get("taskbarPosition") ?? taskbarPosition;
+    _launcherIcon = DatabaseManager.get("launcherIcon") ?? launcherIcon;
+    _recentSearchResults =
+        DatabaseManager.get("recentSearchResults") ?? recentSearchResults;
   }
 }

@@ -35,6 +35,7 @@ class BoxContainer extends StatelessWidget {
   final BoxDecoration? decoration;
   final Clip? clipBehavior;
   final bool useShadows;
+  final bool useAccentBG;
 
   BoxContainer({
     this.child,
@@ -48,6 +49,7 @@ class BoxContainer extends StatelessWidget {
     this.customBlur,
     this.useSystemOpacity = false,
     this.cursor = SystemMouseCursors.basic,
+    this.useAccentBG = false,
     this.decoration,
     this.clipBehavior,
     this.useShadows = false,
@@ -66,13 +68,18 @@ class BoxContainer extends StatelessWidget {
         margin: margin,
         decoration: decoration?.copyWith(borderRadius: customBorderRadius) ??
             BoxDecoration(
+              color: _feature.useAccentColorBG
+                  ? useAccentBG
+                      ? Color(_data.accentColor).withOpacity(0.5)
+                      : Colors.transparent
+                  : Colors.transparent,
               borderRadius: customBorderRadius,
               boxShadow: this.useShadows
                   ? [
                       BoxShadow(
                         blurRadius: 20,
                         spreadRadius: 4,
-                        color: Theme.of(context).shadowColor.withOpacity(0.1),
+                        color: Theme.of(context).shadowColor.withOpacity(0.2),
                       ),
                     ]
                   : [],
@@ -93,6 +100,8 @@ class BoxContainer extends StatelessWidget {
             : Container(
                 padding: padding,
                 child: Acrylic(
+                    useBlur: useBlur ?? true,
+                    customBlur: customBlur,
                     opacity:
                         useSystemOpacity ? _data.themeOpacity : color!.opacity,
                     blurRadius: _data.blur,

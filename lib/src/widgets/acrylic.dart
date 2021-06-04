@@ -23,14 +23,16 @@ import 'package:provider/provider.dart';
 
 // Credits: @HrX03 (https://github.com/hrx03)
 class Acrylic extends StatelessWidget {
+  final bool useBlur;
   final Color color;
   final Widget? child;
-  final double? opacity;
-  final double? blurRadius;
-  const Acrylic(
+  final double? opacity, blurRadius, customBlur;
+  Acrylic(
       {required this.color,
       required this.child,
+      this.useBlur = true,
       this.opacity,
+      this.customBlur,
       this.blurRadius});
 
   @override
@@ -40,19 +42,38 @@ class Acrylic extends StatelessWidget {
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(
-            sigmaX: _pref.enableBlur ? blurRadius ?? 24 : 0,
-            sigmaY: _pref.enableBlur ? blurRadius ?? 24 : 0),
+          sigmaX: useBlur
+              ? customBlur == null
+                  ? (_pref.enableBlur ? blurRadius ?? 24 : 0)
+                  : customBlur!
+              : 0,
+          sigmaY: useBlur
+              ? customBlur == null
+                  ? (_pref.enableBlur ? blurRadius ?? 24 : 0)
+                  : customBlur!
+              : 0,
+        ),
         child: CustomPaint(
           painter: _AcrylicPainter(
             context: context,
-            tintColor: _pref.enableBlur ? _tint : Colors.transparent,
+            tintColor: _pref.enableBlur || useBlur ? _tint : Colors.transparent,
             luminosityColor: AcrylicHelper.getLuminosityColor(
-                _pref.enableBlur ? _tint : Colors.transparent, opacity ?? 0.9),
+                _pref.enableBlur || useBlur ? _tint : Colors.transparent,
+                opacity ?? 0.9),
           ),
           child: BackdropFilter(
             filter: ImageFilter.blur(
-                sigmaX: _pref.enableBlur ? blurRadius ?? 24 : 0,
-                sigmaY: _pref.enableBlur ? blurRadius ?? 24 : 0),
+              sigmaX: useBlur
+                  ? customBlur == null
+                      ? (_pref.enableBlur || useBlur ? blurRadius ?? 24 : 0)
+                      : customBlur!
+                  : 0,
+              sigmaY: useBlur
+                  ? customBlur == null
+                      ? (_pref.enableBlur || useBlur ? blurRadius ?? 24 : 0)
+                      : customBlur!
+                  : 0,
+            ),
             child: Stack(
               children: [
                 Opacity(

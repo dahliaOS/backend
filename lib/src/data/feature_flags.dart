@@ -24,9 +24,11 @@ class FeatureFlags extends ChangeNotifier {
   //FeatureFlag Keys
   bool _useAcrylic = false;
   bool _jsonOverride = false;
+  bool _useAccentColorBG = false;
   //Getter
   bool get useAcrylic => _useAcrylic;
   bool get jsonOverride => _jsonOverride;
+  bool get useAccentColorBG => _useAccentColorBG;
   //Setter
   set useAcrylic(bool value) {
     _useAcrylic = value;
@@ -40,9 +42,17 @@ class FeatureFlags extends ChangeNotifier {
     DatabaseManager.set("feature_jsonOverride", value);
   }
 
+  set useAccentColorBG(bool value) {
+    _useAccentColorBG = value;
+    notifyListeners();
+    DatabaseManager.set("feature_useAccentColorBG", value);
+  }
+
   //Load Values
   void _loadData() {
-    useAcrylic = DatabaseManager.get("feature_useAcrylic") ?? _useAcrylic;
-    jsonOverride = DatabaseManager.get("feature_jsonOverride") ?? _useAcrylic;
+    useAcrylic = DatabaseManager.get("feature_useAcrylic") ?? useAcrylic;
+    jsonOverride = DatabaseManager.get("feature_jsonOverride") ?? jsonOverride;
+    useAccentColorBG =
+        DatabaseManager.get("feature_useAccentColorBG") ?? useAccentColorBG;
   }
 }
