@@ -1,6 +1,7 @@
 name: dahlia_backend
 description: A starting point for Dart libraries or applications.
 version: 0.0.1+1
+publish_to: 'none'
 homepage: https://dahliaos.io
 
 environment:
@@ -19,6 +20,10 @@ dependencies:
   crypto: any
   hive_flutter: any
   battery_plus: ^1.0.1
+  utopia_wm:
+    git:
+      url: https://github.com/dahliaOS/utopia.git
+      ref: utopia
 
 dev_dependencies:
   pedantic: ^1.9.0
@@ -26,7 +31,6 @@ dev_dependencies:
   vm_service: ^6.1.0+1
   flutter_test:
     sdk: flutter
-
 
 flutter:
   assets:

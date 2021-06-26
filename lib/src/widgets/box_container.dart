@@ -59,6 +59,7 @@ class BoxContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final _data = context.read<PreferenceProvider>();
     final _feature = context.watch<FeatureFlags>();
+    final _color = color ?? Theme.of(context).backgroundColor;
     return MouseRegion(
       cursor: cursor,
       child: Container(
@@ -100,13 +101,14 @@ class BoxContainer extends StatelessWidget {
             : Container(
                 padding: padding,
                 child: Acrylic(
-                    useBlur: useBlur ?? true,
-                    customBlur: customBlur,
-                    opacity:
-                        useSystemOpacity ? _data.themeOpacity : color!.opacity,
-                    blurRadius: _data.blur,
-                    color: color ?? Theme.of(context).backgroundColor,
-                    child: Container(padding: padding, child: child)),
+                  useBlur: useBlur ?? true,
+                  customBlur: customBlur,
+                  opacity:
+                      useSystemOpacity ? _data.themeOpacity : _color.opacity,
+                  blurRadius: _data.blur,
+                  color: _color,
+                  child: Container(padding: padding, child: child),
+                ),
               ),
       ),
     );

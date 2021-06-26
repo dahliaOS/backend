@@ -23,5 +23,6 @@ export 'src/vars/application.dart';
 export 'src/api/system_calls.dart';
 export 'src/data/feature_flags.dart';
 export 'src/api/device_info.dart';
+export 'src/api/wm/wm.dart';
 
 // TODO: Export any libraries intended for clients of this package.
