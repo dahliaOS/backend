@@ -18,14 +18,18 @@ import 'dart:io';
 class SystemCalls {
   const SystemCalls();
   void powerOff() {
-    Process.run("poweroff", []);
+    Process.run("shutdown", ["-h", "now"]);
   }
 
   void restart() {
-    Process.run("restart", []);
+    Process.run("reboot", []);
   }
 
   void sleep() {
     Process.run("sleep N", []);
+  }
+
+  void terminal() {
+    Process.run("killall", ["pangolin_desktop"]);
   }
 }
