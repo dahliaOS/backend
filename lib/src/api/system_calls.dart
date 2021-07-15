@@ -18,7 +18,7 @@ import 'dart:io';
 class SystemCalls {
   const SystemCalls();
   void powerOff() {
-    Process.run("shutdown", ["-h", "now"]);
+    Process.run("poweroff", []);
   }
 
   void restart() {
