@@ -19,10 +19,7 @@ import 'package:flutter/material.dart';
 class ErrorWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BoxContainer(
-      color: Colors.black.withOpacity(0.3),
-      useSystemOpacity: false,
-      customBlur: 30,
+    return BoxSurface(
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

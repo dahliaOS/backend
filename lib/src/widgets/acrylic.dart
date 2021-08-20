@@ -39,7 +39,9 @@ class Acrylic extends StatelessWidget {
   Widget build(BuildContext context) {
     final _pref = Provider.of<PreferenceProvider>(context);
     final _tint = AcrylicHelper.getEffectiveTintColor(color, opacity ?? 0.9);
-    return ClipRRect(
+    return Material(
+      color: Colors.transparent,
+      clipBehavior: Clip.antiAlias,
       child: BackdropFilter(
         filter: ImageFilter.blur(
           sigmaX: useBlur

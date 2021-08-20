@@ -22,12 +22,12 @@ import 'package:provider/provider.dart';
 class Blur extends StatelessWidget {
   final Widget? child;
   final bool? useBlur;
-  final BorderRadius? customBorderRadius;
+  final BorderRadius? borderRadius;
   final double? customBlur;
   Blur(
       {Key? key,
       @required this.child,
-      this.customBorderRadius,
+      this.borderRadius,
       this.useBlur,
       this.customBlur})
       : super(key: key);
@@ -35,8 +35,7 @@ class Blur extends StatelessWidget {
   Widget build(BuildContext context) {
     final _data = context.watch<PreferenceProvider>();
     return ClipRRect(
-        borderRadius:
-            customBorderRadius ?? BorderRadius.circular(_data.borderRadius),
+        borderRadius: borderRadius ?? BorderRadius.circular(_data.borderRadius),
         clipBehavior: Clip.hardEdge,
         child: BackdropFilter(
           filter: ImageFilter.blur(

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import 'package:battery_plus/battery_plus.dart';
+/* import 'package:battery_plus/battery_plus.dart';
 
 var battery = Battery();
 
@@ -22,4 +22,4 @@ class DeviceInfo {
   static Future<int> get batteryPercantage => battery.batteryLevel;
   static Stream<BatteryState> get onBatteryStateChanged =>
       battery.onBatteryStateChanged;
-}
+} */

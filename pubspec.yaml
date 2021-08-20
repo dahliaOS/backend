@@ -1,5 +1,5 @@
 name: dahlia_backend
-description: A starting point for Dart libraries or applications.
+description: Backend for the pangolin desktop
 version: 0.0.1+1
 publish_to: 'none'
 homepage: https://dahliaos.io
@@ -11,15 +11,10 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^5.0.0-nullsafety.5
-  path: ^1.7.0
   path_provider: any
   hive: ^2.0.0
-  xdg_directories:
-  cron: ^0.3.0
   intl: ^0.17.0-nullsafety.2
-  crypto: any
   hive_flutter: any
-  battery_plus: ^1.0.1
   utopia_wm:
     git:
       url: https://github.com/dahliaOS/utopia.git

@@ -13,103 +13,114 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import 'package:dahlia_backend/src/data/data_management.dart';
-import 'package:dahlia_backend/src/data/feature_flags.dart';
+
 import 'package:dahlia_backend/src/widgets/acrylic.dart';
-import 'package:dahlia_backend/src/widgets/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
-class BoxContainer extends StatelessWidget {
+class BoxSurface extends StatelessWidget {
+  final EdgeInsetsGeometry? padding, margin;
+  final BorderRadius borderRadius;
   final Widget? child;
   final double? width, height;
-  final EdgeInsetsGeometry? padding, margin;
-  final Color? color;
-  final bool? useBlur;
-  final BorderRadius? customBorderRadius;
-  final bool useSystemOpacity;
-  final double? customBlur;
-  final SystemMouseCursor cursor;
-  final BoxDecoration? decoration;
-  final Clip? clipBehavior;
-  final bool useShadows;
-  final bool useAccentBG;
-
-  BoxContainer({
-    this.child,
-    this.height,
-    this.width,
-    this.margin,
-    this.padding,
-    this.color,
-    this.useBlur,
-    this.customBorderRadius,
-    this.customBlur,
-    this.useSystemOpacity = false,
-    this.cursor = SystemMouseCursors.basic,
-    this.useAccentBG = false,
-    this.decoration,
-    this.clipBehavior,
-    this.useShadows = false,
+  final bool outline;
+  const BoxSurface({
     Key? key,
+    this.child,
+    this.borderRadius = BorderRadius.zero,
+    this.padding,
+    this.margin,
+    this.width,
+    this.height,
+    this.outline = true,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final _data = context.read<PreferenceProvider>();
-    final _feature = context.watch<FeatureFlags>();
-    final _color = color ?? Theme.of(context).backgroundColor;
-    return MouseRegion(
-      cursor: cursor,
-      child: Container(
-        clipBehavior: clipBehavior ?? Clip.antiAlias,
-        width: width,
-        height: height,
-        margin: margin,
-        decoration: decoration?.copyWith(borderRadius: customBorderRadius) ??
-            BoxDecoration(
-              color: _feature.useAccentColorBG
-                  ? useAccentBG
-                      ? Color(_data.accentColor).withOpacity(0.5)
-                      : Colors.transparent
-                  : Colors.transparent,
-              borderRadius: customBorderRadius,
-              boxShadow: this.useShadows
-                  ? [
-                      BoxShadow(
-                        blurRadius: 20,
-                        spreadRadius: 4,
-                        color: Theme.of(context).shadowColor.withOpacity(0.2),
-                      ),
-                    ]
-                  : [],
-            ),
-        child: !_feature.useAcrylic
-            ? Blur(
-                useBlur: useBlur ?? true,
-                customBlur: customBlur,
-                customBorderRadius: customBorderRadius,
-                child: Container(
-                  padding: padding,
-                  color: useSystemOpacity
-                      ? color?.withOpacity(_data.themeOpacity)
-                      : color?.withOpacity(color!.opacity),
-                  child: child,
-                ),
-              )
-            : Container(
-                padding: padding,
-                child: Acrylic(
-                  useBlur: useBlur ?? true,
-                  customBlur: customBlur,
-                  opacity:
-                      useSystemOpacity ? _data.themeOpacity : _color.opacity,
-                  blurRadius: _data.blur,
-                  color: _color,
-                  child: Container(padding: padding, child: child),
-                ),
-              ),
+    final bool _darkMode = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      width: width,
+      height: height,
+      padding: padding,
+      margin: margin,
+      foregroundDecoration: ShapeDecoration(
+        color: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          // Set border radius of the surface area
+          borderRadius: borderRadius,
+          // Create outline around the surface
+          side: outline
+              ? BorderSide(
+                  color: _darkMode
+                      ? Colors.white.withOpacity(0.2)
+                      : Colors.black.withOpacity(0.2),
+                  width: 2,
+                )
+              : BorderSide.none,
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: borderRadius,
+        child: Acrylic(
+          opacity: 0.65,
+          blurRadius: 16,
+          color: Theme.of(context).backgroundColor,
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class BoxContainer extends StatelessWidget {
+  final EdgeInsetsGeometry? padding, margin;
+  final BorderRadius borderRadius;
+  final Widget? child;
+  final double? width, height;
+  final bool outline;
+  const BoxContainer({
+    Key? key,
+    this.child,
+    this.borderRadius = BorderRadius.zero,
+    this.padding,
+    this.margin,
+    this.width,
+    this.height,
+    this.outline = true,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final bool _darkMode = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      width: width,
+      height: height,
+      padding: padding,
+      margin: margin,
+      foregroundDecoration: ShapeDecoration(
+        color: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          // Set border radius of the surface area
+          borderRadius: borderRadius,
+          // Create outline around the surface
+          side: outline
+              ? BorderSide(
+                  color: _darkMode
+                      ? Colors.white.withOpacity(0.1)
+                      : Colors.black.withOpacity(0.2),
+                  width: 2,
+                )
+              : BorderSide.none,
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: borderRadius,
+        child: Acrylic(
+          opacity: 0.4,
+          blurRadius: 16,
+          color: Theme.of(context).backgroundColor,
+          child: child,
+        ),
       ),
     );
   }
