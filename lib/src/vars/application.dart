@@ -22,7 +22,7 @@ class Application {
   final bool isTest;
   final String? iconName;
   final Color? color;
-  final bool breaksWeb;
+  final bool supportsWeb;
   const Application(
       {required this.app,
       required this.packageName,
@@ -33,7 +33,7 @@ class Application {
       this.color,
       this.isTest = false,
       this.version,
-      this.breaksWeb = false});
+      this.supportsWeb = true});
   const Application.testing(
       {required this.app,
       required this.packageName,
@@ -44,7 +44,7 @@ class Application {
       this.isTest = true,
       this.color,
       this.version = "TEST",
-      this.breaksWeb = false});
+      this.supportsWeb = true});
 }
 
 enum ApplicationCategory {
