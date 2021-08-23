@@ -22,26 +22,29 @@ class Application {
   final bool isTest;
   final String? iconName;
   final Color? color;
+  final bool supportsWeb;
   const Application(
-      {@required this.app,
-      @required this.packageName,
+      {required this.app,
+      required this.packageName,
       this.category,
       this.description,
       this.iconName,
-      @required this.name,
+      required this.name,
       this.color,
       this.isTest = false,
-      this.version});
+      this.version,
+      this.supportsWeb = true});
   const Application.testing(
-      {@required this.app,
-      @required this.packageName,
+      {required this.app,
+      required this.packageName,
       this.category = ApplicationCategory.TESTING,
       this.description = "TESING APP",
       this.iconName,
-      @required this.name,
+      required this.name,
       this.isTest = true,
       this.color,
-      this.version = "TEST"});
+      this.version = "TEST",
+      this.supportsWeb = true});
 }
 
 enum ApplicationCategory {
