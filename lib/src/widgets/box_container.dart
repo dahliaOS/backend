@@ -50,12 +50,7 @@ class BoxSurface extends StatelessWidget {
           borderRadius: borderRadius,
           // Create outline around the surface
           side: outline
-              ? BorderSide(
-                  color: _darkMode
-                      ? Colors.white.withOpacity(0.2)
-                      : Colors.black.withOpacity(0.2),
-                  width: 2,
-                )
+              ? BorderSide.none
               : BorderSide.none,
         ),
       ),
