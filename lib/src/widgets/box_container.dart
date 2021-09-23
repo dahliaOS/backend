@@ -16,7 +16,6 @@ limitations under the License.
 
 import 'package:dahlia_backend/src/widgets/acrylic.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class BoxSurface extends StatelessWidget {
   final EdgeInsetsGeometry? padding, margin;
@@ -24,6 +23,7 @@ class BoxSurface extends StatelessWidget {
   final Widget? child;
   final double? width, height;
   final bool outline;
+  final bool dropShadow;
   const BoxSurface({
     Key? key,
     this.child,
@@ -32,7 +32,8 @@ class BoxSurface extends StatelessWidget {
     this.margin,
     this.width,
     this.height,
-    this.outline = true,
+    this.outline = false,
+    this.dropShadow = false,
   }) : super(key: key);
 
   @override
@@ -43,6 +44,20 @@ class BoxSurface extends StatelessWidget {
       height: height,
       padding: padding,
       margin: margin,
+      decoration: ShapeDecoration(
+        shape: RoundedRectangleBorder(
+          // Set border radius of the surface area
+          borderRadius: borderRadius,
+        ),
+        shadows: dropShadow
+            ? [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.10),
+                    blurRadius: 25,
+                    spreadRadius: 10)
+              ]
+            : [],
+      ),
       foregroundDecoration: ShapeDecoration(
         color: Colors.transparent,
         shape: RoundedRectangleBorder(
@@ -58,7 +73,7 @@ class BoxSurface extends StatelessWidget {
         borderRadius: borderRadius,
         child: Acrylic(
           opacity: 0.65,
-          blurRadius: 16,
+          blurRadius: 24,
           color: Theme.of(context).backgroundColor,
           child: child,
         ),
@@ -81,7 +96,7 @@ class BoxContainer extends StatelessWidget {
     this.margin,
     this.width,
     this.height,
-    this.outline = true,
+    this.outline = false,
   }) : super(key: key);
 
   @override
@@ -111,8 +126,8 @@ class BoxContainer extends StatelessWidget {
       child: ClipRRect(
         borderRadius: borderRadius,
         child: Acrylic(
-          opacity: 0.4,
-          blurRadius: 16,
+          opacity: 0.65,
+          blurRadius: 24,
           color: Theme.of(context).backgroundColor,
           child: child,
         ),

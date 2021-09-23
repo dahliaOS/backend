@@ -79,7 +79,7 @@ class Acrylic extends StatelessWidget {
             child: Stack(
               children: [
                 Opacity(
-                  opacity: _pref.enableBlur ? 0.02 : 0,
+                  opacity: _pref.enableBlur ? 0.025 : 0,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       image: DecorationImage(
@@ -135,6 +135,11 @@ class _AcrylicPainter extends CustomPainter {
         tintColor,
         tintColor.opacity == 1 ? BlendMode.srcIn : BlendMode.color,
       );
+      canvas.drawColor(
+          Color(Provider.of<PreferenceProvider>(context, listen: false)
+                  .accentColor)
+              .withOpacity(0.05),
+          BlendMode.color);
     }
   }
 

@@ -35,7 +35,7 @@ class DateTimeManager {
   static void initialiseScheduler() async {
     //TODO create an initalisation for the default format
     //setTimeFormat('12h+S');
-    //setDateFormat("dd.MM.yyyy");
+    setDateFormat("dd.MM.yyyy");
 
     _timeNotifier = ValueNotifier(_getTimeFormat().format(DateTime.now()));
 

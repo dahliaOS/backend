@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class DatabaseManager {
   static late Box _hivedb;
@@ -79,12 +79,19 @@ class PreferenceProvider extends ChangeNotifier {
   String _fontFamily = "Roboto";
   bool _useCustomAccentColor = false;
   bool _useColoredTitleBar = false;
-  List<String> _pinnedApps = List.from([
-    "io.dahlia.calculator",
-    "io.dahlia.files",
-    "io.dahlia.settings",
-    "io.dahlia.terminal"
-  ], growable: true);
+  List<String> _pinnedApps = List.from(
+      kIsWeb
+          ? [
+              "io.dahlia.calculator",
+              "io.dahlia.settings",
+            ]
+          : [
+              "io.dahlia.calculator",
+              "io.dahlia.terminal",
+              "io.dahlia.settings",
+              "io.dahlia.files"
+            ],
+      growable: true);
   List<String> _recentWallpapers = List.from([], growable: true);
   double _taskbarPosition = 2;
   int _launcherIcon = Icons.apps.codePoint;
